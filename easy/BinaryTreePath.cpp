@@ -1,5 +1,9 @@
 /*
-采用一个vector<string>保存需要返回的所有结果集，从根节点开始采用中序遍历，每遍历一个节点，将节点值加入到vector<int>中，
+Q：给出一个二叉树，然后返回每一条从根节点到不同叶子节点的不重复路径，并打印出来路径 
+
+U：https://leetcode.com/problems/binary-tree-paths/
+
+A:采用一个vector<string>保存需要返回的所有结果集，从根节点开始采用中序遍历，每遍历一个节点，将节点值加入到vector<int>中，
 直到到达一个了叶子节点，此时把vector<int>中的所有数据拼装成字符串并push_back到vector<string>结果集中，然后将此叶子节点
 pop_back弹出vector<int>，然后再去轮询叶子节点父节点的右子树，以此类推，采用递归左右子树。直到所有路径全部找出为止返回。
 */
