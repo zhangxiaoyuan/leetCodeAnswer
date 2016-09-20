@@ -25,6 +25,7 @@ pop_back弹出vector<int>，然后再去轮询叶子节点父节点的右子树�
 class Solution {
 public:
 
+    /*
     string convertRes(const vector<int>& nodeVec)
     {
         string str;
@@ -43,6 +44,23 @@ public:
             stringstream ss;
 		    ss << nodeVec.at(i);
 		    str.append(ss.str());
+        }
+        
+        return str;
+    }
+    */
+    string convertRes(const vector<int>& nodeVec)
+    {
+        string str;
+        if (!nodeVec.empty())
+        {
+            int i = 0;
+            for(;i < nodeVec.size() -1; i++)
+            {
+                str += to_string(nodeVec.at(i)) + "->";
+            }
+            
+            str += to_string(nodeVec.at(i));
         }
         
         return str;
@@ -91,4 +109,38 @@ public:
 private:
     vector<string> m_strVec;
     vector<int> m_nodeVec;
+};
+
+
+/*最优解：不需要单独用vector<int>存储每一个节点的值，因为递归的时候返回会自动回退到上一步，所以每一步只需要去构造结果string即可*/
+class Solution {
+public:
+    
+    void parseNode1(TreeNode* root, string str)
+    {
+        if(root->left == NULL && root->right == NULL)
+       	{
+            m_strVec.push_back(str + to_string(root->val));
+            return;
+       	}   
+        if(root->left != NULL)
+            parseNode1(root->left, str + to_string(root->val) + "->");
+            
+        if(root->right != NULL)
+           parseNode1(root->right, str + to_string(root->val) + "->");
+    }
+    
+    vector<string> binaryTreePaths(TreeNode* root) 
+    {
+        if (NULL != root)
+        {
+            string str = "";
+            parseNode1(root, str);
+        }
+        
+        return m_strVec;
+    }
+    
+private:
+    vector<string> m_strVec;
 };
